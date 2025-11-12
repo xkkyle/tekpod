@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { Button, Select } from '../components';
+import { Button, Select, ShrinkMotionBlock } from '../components';
 import { useToastStore } from '../store';
 import { toastData } from '../constants';
 
@@ -8,7 +8,7 @@ const SIXTY = 60;
 const ONE_SECOND = 1000;
 
 const PomodoroTimer = () => {
-	const initialMinute = 50;
+	const initialMinute = 25;
 	const [countdownTime, setCountdownTime] = useState(initialMinute * SIXTY); // 60초
 	const [isCountdownRunning, setIsCountdownRunning] = useState(false);
 	const [inputMinutes, setInputMinutes] = useState(initialMinute);
@@ -98,10 +98,7 @@ const PomodoroTimer = () => {
 
 	return (
 		<Container>
-			<MinuteAndSecondDisplay
-				isAllTasksDone={
-					countdownTime > 30 ? 'ongoing' : countdownTime <= 30 ? 'almost_done' : countdownTime <= 10 ? 'close_to_done' : 'done'
-				}>
+			<MinuteAndSecondDisplay countdownTime={countdownTime} inputMinutes={inputMinutes}>
 				{formatCountdownTime(countdownTime)}
 			</MinuteAndSecondDisplay>
 			<SetInputAndButton>
@@ -118,13 +115,17 @@ const PomodoroTimer = () => {
 				/>
 			</SetInputAndButton>
 			<ButtonGroup>
-				<StartButton type="button" onClick={startCountdown} disabled={isCountdownRunning || countdownTime === 0}>
-					Start
-				</StartButton>
-				<PauseButton type="button" onClick={pauseCountdown} disabled={!isCountdownRunning}>
-					Pause
-				</PauseButton>
-				{!isCountdownRunning && countdownIntervalRef.current && (
+				{!isCountdownRunning ? (
+					<StartButton type="button" onClick={startCountdown} disabled={isCountdownRunning || countdownTime === 0}>
+						{countdownTime !== inputMinutes * SIXTY ? 'Resume' : 'Start'}
+					</StartButton>
+				) : (
+					<PauseButton type="button" onClick={pauseCountdown} disabled={!isCountdownRunning}>
+						Pause
+					</PauseButton>
+				)}
+
+				{!isCountdownRunning && countdownTime !== inputMinutes * SIXTY && (
 					<ResetButton type="button" onClick={resetCountdown}>
 						Reset
 					</ResetButton>
@@ -144,21 +145,28 @@ const Container = styled.section`
 	height: calc(100dvh - 2 * var(--nav-height) - 2 * var(--padding-container-mobile));
 `;
 
-const MinuteAndSecondDisplay = styled.div<{ isAllTasksDone: 'ongoing' | 'almost_done' | 'close_to_done' | 'done' }>`
-	font-size: calc(var(--fz-h1) * 2);
+const MinuteAndSecondDisplay = styled.div<{
+	countdownTime: number;
+	inputMinutes: number;
+}>`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 60px;
+	width: 320px;
+	height: 320px;
+	font-size: calc(var(--fz-h1) * 1.75);
 	font-weight: var(--fw-black);
-
-	color: ${({ isAllTasksDone }) =>
-		isAllTasksDone === 'ongoing'
-			? 'var(--black)'
-			: isAllTasksDone === 'almost_done'
-			? 'var(--blue200)'
-			: isAllTasksDone === 'close_to_done'
-			? 'var(--blue400)'
-			: 'var(--blue300)'};
+	outline: 2px dotted var(--blue300);
+	outline-offset: 4px;
+	border: 1px solid var(--blue100);
+	border-radius: var(--radius-extra);
+	color: var(--grey100);
+	background: var(--gradient-blue100);
+	opacity: ${({ countdownTime, inputMinutes }) => (countdownTime < 30 ? 0.4 : countdownTime / (inputMinutes * 60))};
 `;
 
-const ButtonGroup = styled.div`
+const ButtonGroup = styled(ShrinkMotionBlock)`
 	position: absolute;
 	bottom: 16px;
 	display: flex;
@@ -173,6 +181,7 @@ const SetInputAndButton = styled.div`
 	justify-content: center;
 	align-items: center;
 	gap: 16px;
+	margin-top: 16px;
 
 	#select-root {
 		width: 100%;
@@ -187,8 +196,10 @@ const SetInputAndButton = styled.div`
 
 const StyledButton = styled(Button)`
 	padding: var(--padding-container-mobile);
+	min-height: 64px;
 	min-width: 100px;
 	font-weight: var(--fw-semibold);
+	border-radius: var(--radius-extra);
 `;
 
 const StartButton = styled(StyledButton)`
@@ -227,8 +238,10 @@ const PauseButton = styled(StyledButton)`
 `;
 
 const ResetButton = styled(StyledButton)`
-	color: var(--blue200);
-	background-color: var(--blue100);
+	width: 100%;
+	color: var(--black);
+	background-color: var(--white);
+	border: 1px solid var(--grey100);
 
 	&:hover,
 	&:active,
