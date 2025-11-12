@@ -54,6 +54,8 @@ const Global = css`
 		--blue200: #1c9eff;
 		--blue300: #b1dcfd;
 		--blue400: #7fc7ff;
+		--gradient-blue100: linear-gradient(135deg, #a1c4fd 0%, #6fa8ff 40%, #3f5efb 100%);
+		--gradient-blue200: linear-gradient(145deg, #667eea 0%, #4facfe 100%);
 
 		--green100: #f1fcf8;
 		--green200: #00c82c;
