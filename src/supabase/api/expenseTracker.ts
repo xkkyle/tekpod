@@ -1,6 +1,6 @@
 import supabase from '../service';
 import { ExpenseTracker } from '../schema';
-import { currentMonth, currentYear, formatByKoreanTime } from '../../utils';
+import { currentMonth, formatByKoreanTime } from '../../utils';
 import { cardType } from '../../constants';
 
 const TABLE = import.meta.env.VITE_SUPABASE_DB_TABLE_EXPENSE_TRACKER;
@@ -9,13 +9,13 @@ const ZERO_PRICE = 0;
 
 const FIXED_PAYMENT_DATE = 8;
 
-const getStartDayOfMonth = (month: number) => {
-	return new Date(currentYear, month, 1, 0, 0, 0, 0).toISOString();
+const getStartDayOfMonth = (year: number, month: number) => {
+	return new Date(year, month, 1, 0, 0, 0, 0).toISOString();
 };
 
 // new Date(2025, 7, 0) -> 2025/06/30 00:00:00 KST -> 2025/06/29 15:00:00
-const getEndDayOfMonth = (month: number) => {
-	return new Date(currentYear, month + 1, 0, 23, 59, 59, 999).toISOString();
+const getEndDayOfMonth = (year: number, month: number) => {
+	return new Date(year, month + 1, 0, 23, 59, 59, 999).toISOString();
 };
 
 const calculatePriceUnits = (data: ExpenseTracker[]) => {
@@ -134,12 +134,12 @@ const getPaymentsByDate = async (date: Date): Promise<PaymentsByDate> => {
 	return { expense: data, totalPrice: data.length ? calculatePriceUnits(data) : ZERO_PRICE };
 };
 
-const getAllPaymentsByMonth = async (month: number) => {
+const getAllPaymentsByMonth = async ({ year, month }: { year: number; month: number }) => {
 	const { data, error } = await supabase
 		.from(TABLE)
 		.select('*')
-		.gte('usage_date', getStartDayOfMonth(month))
-		.lte('usage_date', getEndDayOfMonth(month))
+		.gte('usage_date', getStartDayOfMonth(year, month))
+		.lte('usage_date', getEndDayOfMonth(year, month))
 		.order('usage_date', { ascending: false });
 
 	if (error) {
@@ -149,33 +149,19 @@ const getAllPaymentsByMonth = async (month: number) => {
 	return data;
 };
 
-const getAllPaymentsPriceByMonth = async (month: number) => {
-	const data = await getAllPaymentsByMonth(month);
+const getAllPaymentsPriceByYearAndMonth = async ({ year, month }: { year: number; month: number }) => {
+	const data = await getAllPaymentsByMonth({ year, month });
 
 	return Object.values(calculatePriceUnits(data)).length === 0 ? { price: 0 } : calculatePriceUnits(data);
 };
 
-const getMaxAndMinPaymentsByMonth = async (month: number) => {
-	const { data, error } = await supabase
-		.from(TABLE)
-		.select('*')
-		.gte('usage_date', getStartDayOfMonth(month))
-		.lte('usage_date', getEndDayOfMonth(month));
-
-	if (error) {
-		throw new Error(error.message);
-	}
-
-	return data;
-};
-
-const getFixedCostPaymentsByMonth = async (month: number) => {
+const getFixedCostPaymentsByMonth = async ({ year, month }: { year: number; month: number }) => {
 	const { data, error } = await supabase
 		.from(TABLE)
 		.select('*')
 		.eq('isFixed', true)
-		.gte('usage_date', getStartDayOfMonth(month))
-		.lte('usage_date', getEndDayOfMonth(month))
+		.gte('usage_date', getStartDayOfMonth(year, month))
+		.lte('usage_date', getEndDayOfMonth(year, month))
 		.order('usage_date', { ascending: false });
 
 	if (error) {
@@ -228,8 +214,7 @@ export {
 	FIXED_PAYMENT_DATE,
 	getPaymentsByDate,
 	getAllPaymentsByMonth,
-	getAllPaymentsPriceByMonth,
-	getMaxAndMinPaymentsByMonth,
+	getAllPaymentsPriceByYearAndMonth,
 	getFixedCostPaymentsByMonth,
 	getCreditCardPaymentsByMonth,
 	addPayment,

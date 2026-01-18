@@ -1,17 +1,18 @@
 import styled from '@emotion/styled';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { getAllPaymentsPriceByMonth } from '../../supabase';
+import { getAllPaymentsPriceByYearAndMonth } from '../../supabase';
 import { MatchedPriceUnitWithSymbol, matchedPriceUnitWithSymbol, staleTime, queryKey } from '../../constants';
 import { monetizeWithSeparator } from '../../utils';
 
 interface TotalExpensePriceProps {
+	currentYear: number;
 	currentMonthIndex: number;
 }
 
-const TotalExpensePrice = ({ currentMonthIndex }: TotalExpensePriceProps) => {
+const TotalExpensePrice = ({ currentYear, currentMonthIndex }: TotalExpensePriceProps) => {
 	const { data } = useSuspenseQuery({
-		queryKey: [...queryKey.EXPENSE_TRACKER, currentMonthIndex], // 0 ~ 11
-		queryFn: () => getAllPaymentsPriceByMonth(currentMonthIndex), // 0 ~ 11
+		queryKey: [...queryKey.EXPENSE_TRACKER, currentYear, currentMonthIndex], // 0 ~ 11
+		queryFn: () => getAllPaymentsPriceByYearAndMonth({ year: currentYear, month: currentMonthIndex }), // 0 ~ 11
 		staleTime: staleTime.EXPENSE_TRACKER.TOTAL_EXPENSE_PRICE,
 	});
 

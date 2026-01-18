@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
 import { MdUpcoming } from 'react-icons/md';
@@ -7,7 +7,7 @@ import { BsCalendar2MonthFill } from 'react-icons/bs';
 import { Button, Select, ShrinkMotionBlock, TotalExpensePrice, TotalExpensePriceLoader, MODAL_CONFIG } from '../components';
 import { useModalStore } from '../store';
 import { routes } from '../constants';
-import { type Month, months, currentMonth, currentYear, getMonthIndexFromMonths } from '../utils';
+import { type Month, months, currentMonth, getMonthIndexFromMonths, Year, years, currentYear } from '../utils';
 
 const linkGroup = [
 	{
@@ -28,6 +28,7 @@ const linkGroup = [
 ];
 
 const ExpenseTrackerPage = () => {
+	const [targetYear, setTargetYear] = useState<Year>(`${currentYear}`); // currentYear ~ [currentYear - 2]
 	const [targetMonth, setTargetMonth] = useState<Month>(months[currentMonth]); // Jan ~ Dec
 	const currentMonthIndex = getMonthIndexFromMonths(targetMonth);
 
@@ -43,6 +44,12 @@ const ExpenseTrackerPage = () => {
 			},
 		});
 	};
+
+	useEffect(() => {
+		if (targetYear !== `${currentYear}`) {
+			setTargetMonth(months[months.length - 1]);
+		}
+	}, [targetYear]);
 	return (
 		<section>
 			<TotalExpense>
@@ -50,16 +57,23 @@ const ExpenseTrackerPage = () => {
 					<Flex direction={'row'} alignItems={'center'} gap={8}>
 						<h2>Total Expenses</h2>
 						<Select
-							data={months.filter((_, idx) => idx <= currentMonth).reverse()}
+							data={[...months].reverse()}
 							placeholder="Select Month"
 							descriptionLabel="Month"
 							currentValue={targetMonth}
 							onSelect={option => setTargetMonth(months[getMonthIndexFromMonths(option)])}
 						/>
-						<span>in {currentYear}</span>
+						in
+						<Select
+							data={years}
+							placeholder="Select Year"
+							descriptionLabel="Year"
+							currentValue={targetYear}
+							onSelect={option => setTargetYear(option)}
+						/>
 					</Flex>
 					<Suspense fallback={<TotalExpensePriceLoader />}>
-						<TotalExpensePrice currentMonthIndex={currentMonthIndex} />
+						<TotalExpensePrice currentYear={+targetYear} currentMonthIndex={currentMonthIndex} />
 					</Suspense>
 				</TotalExpenseContent>
 				<Flex direction={'row'} alignItems={'center'} gap={0}>

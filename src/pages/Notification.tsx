@@ -82,6 +82,7 @@ const NotificationPage = () => {
 									navigate(routes.TODO_REMINDER, { state: { todo_id, openModal: true } });
 								} catch (e) {
 									console.error(e);
+									throw e;
 								}
 							}}>
 							{isLoading ? (

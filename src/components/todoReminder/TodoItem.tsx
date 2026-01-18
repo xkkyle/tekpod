@@ -117,6 +117,7 @@ const TodoItem = ({ id, todo, isContentEditing, isDragging, onEditingIdChange, o
 				{isRemovePending ? <LoadingSpinner /> : <RiCloseFill size="24" color="white" />}
 			</DeleteBackground>
 			<TodoContent
+				isContentEditing={isContentEditing}
 				dragX={dragX}
 				onTouchStart={e => {
 					if (!isContentEditing) {
@@ -193,9 +194,10 @@ const DeleteBackground = styled.div`
 	align-items: center;
 	width: 60px;
 	background-color: var(--orange800);
+	border-radius: var(--radius-m);
 `;
 
-const TodoContent = styled.div<{ dragX: number }>`
+const TodoContent = styled.div<{ isContentEditing: boolean; dragX: number }>`
 	position: relative;
 	display: flex;
 	justify-content: space-between;
@@ -203,8 +205,8 @@ const TodoContent = styled.div<{ dragX: number }>`
 	gap: 8px;
 	height: 100%;
 	min-height: 60px;
-	background-color: var(--white);
-	border-radius: ${({ dragX }) => (dragX < 0 ? 'var(--radius-s)' : 0)};
+	background-color: ${({ isContentEditing }) => (isContentEditing ? 'var(--grey50)' : 'var(--white)')};
+	border-radius: ${({ dragX, isContentEditing }) => (dragX < 0 || isContentEditing ? 'var(--radius-m)' : 0)};
 	transform: ${({ dragX }) => `translateX(${dragX}px)`};
 	transition: transform 0.1s ease-out;
 	z-index: 1;
@@ -234,6 +236,7 @@ const ContentEditingInfoButton = styled(Button)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
+	margin-right: 4px;
 	padding: calc(var(--padding-container-mobile) * 0.75);
 
 	&:hover {

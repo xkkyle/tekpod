@@ -1,7 +1,7 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { Description, ExpenseChart, ExpenseChartLoader, Select } from '../components';
-import { type Month, currentMonth, getMonthIndexFromMonths, months } from '../utils';
+import { type Month, currentMonth, currentYear, getMonthIndexFromMonths, months } from '../utils';
 import { priceUnit, PriceUnitType } from '../constants';
 
 const ExpenseTrackerReportPage = () => {
@@ -12,6 +12,7 @@ const ExpenseTrackerReportPage = () => {
 		<section>
 			<Title>
 				<span>Report of</span>
+				<Year>{currentYear}</Year>
 				<Select
 					data={months.filter((_, idx) => idx <= currentMonth).reverse()}
 					placeholder={'Month'}
@@ -47,6 +48,18 @@ const Title = styled.h2`
 	span[aria-label='month'] {
 		color: var(--blue200);
 	}
+`;
+
+const Year = styled.span`
+	display: inline-flex;
+	align-items: center;
+	padding: calc(var(--padding-container-mobile) * 0.5) calc(var(--padding-container-mobile) * 0.75);
+	height: 37px;
+	font-size: var(--fz-p);
+	font-weight: var(--fw-semibold);
+	border: 1px solid var(--grey100);
+	border-radius: var(--radius-s);
+	background-color: var(--grey50);
 `;
 
 const UnitType = styled.span`

@@ -58,11 +58,11 @@ const ExpenseTrackerByMonthPage = () => {
 	return (
 		<section>
 			<Header>
-				<Title>Expense Tracker</Title>
+				<Title aria-label="Expense Tracker By Month Title">Expense Tracker</Title>
 			</Header>
 			<DatePicker selected={selected} setSelected={handleDateChange} disabled={{ after: today }} isFloated={true} />
 			<PaymentListLayout>
-				<PaymentListTitle>List</PaymentListTitle>
+				<PaymentListTitle aria-label="Payment List Title">List</PaymentListTitle>
 				<Flex>
 					<SegmentedControl options={segmentedControlOptions} current={currentPaymentMethod} setCurrent={setCurrentPaymentMethod} />
 					<Select
@@ -88,10 +88,10 @@ const Header = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 16px;
 `;
 
 const Title = styled.h2`
+	display: none;
 	font-size: var(--fz-h5);
 	font-weight: var(--fw-bold);
 `;
@@ -113,6 +113,7 @@ const PaymentListLayout = styled.div`
 `;
 
 const PaymentListTitle = styled.div`
+	display: none;
 	margin-bottom: 8px;
 	font-size: var(--fz-h6);
 	font-weight: var(--fw-semibold);

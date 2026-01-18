@@ -72,6 +72,7 @@ const Container = styled.div<{ isFloated: boolean }>`
 	position: ${({ isFloated }) => (isFloated ? 'relative' : 'static')};
 	display: inline-flex;
 	flex-direction: column;
+	width: 100%;
 	gap: 4px;
 `;
 

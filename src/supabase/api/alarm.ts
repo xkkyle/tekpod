@@ -44,7 +44,15 @@ const getSubscribed = (update?: Dispatch<SetStateAction<RealtimePostgresChangesP
 };
 
 const getUncompletedAlarms = async () => {
-	const { data, error } = await supabase.from(TABLE).select('*').eq('isChecked', false).order('reminder_time', { ascending: false });
+	const startDate = `${currentYear}-01-01`;
+	const endDate = `${currentYear}-12-${new Date(currentYear, currentMonth + 1, 0, 23, 59, 59, 999).getDate()}`;
+	const { data, error } = await supabase
+		.from(TABLE)
+		.select('*')
+		.gte('reminder_time', startDate)
+		.lte('reminder_time', endDate)
+		.eq('isChecked', false)
+		.order('reminder_time', { ascending: false });
 
 	if (error) {
 		throw new Error(error.message);
@@ -54,16 +62,8 @@ const getUncompletedAlarms = async () => {
 };
 
 const getAlarms = async () => {
-	const startDate = `${currentYear}-${`${currentMonth}`.padStart(2, '0')}-01`;
-	const endDate = `${currentYear}-${`${currentMonth + 1}`.padStart(2, '0')}-${new Date(
-		currentYear,
-		currentMonth + 1,
-		0,
-		23,
-		59,
-		59,
-		999,
-	).getDate()}`;
+	const startDate = `${currentYear}-01-01`;
+	const endDate = `${currentYear}-12-${new Date(currentYear, currentMonth + 2, 0, 23, 59, 59, 999).getDate()}`;
 
 	const { data, error } = await supabase
 		.from(TABLE)

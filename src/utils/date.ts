@@ -1,5 +1,6 @@
 import { format, toZonedTime } from 'date-fns-tz';
 
+type Year = (typeof years)[number];
 type Month = (typeof months)[number];
 
 const koreaTimeZone = 'Asia/Seoul';
@@ -59,7 +60,7 @@ const getNextMonthFormatDate = (usageDate: Date | string) => {
 	return `${((month + 2 > 12 ? month + 2 - 12 : month + 2) + '').padStart(2, '0')}/${(date + '').padStart(2, '0')}`;
 };
 
-export type { Month };
+export type { Year, Month };
 export {
 	today,
 	todayLocaleString,

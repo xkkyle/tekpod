@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { RiArrowLeftLine } from 'react-icons/ri';
 import { Button, ShrinkMotionBlock } from '..';
+import { useModalStore } from '../../store';
 
 interface GoBackButtonProps {
 	children?: ReactNode;
@@ -10,10 +11,17 @@ interface GoBackButtonProps {
 
 const GoBackButton = ({ children = <RiArrowLeftLine size="24" color="var(--grey500)" /> }: GoBackButtonProps) => {
 	const navigate = useNavigate();
+	const { resetModals } = useModalStore();
 
 	return (
 		<StyledShrinkMotionBlock>
-			<StyledButton type="button" onClick={() => navigate(-1)} aria-label="Go back to previous Route">
+			<StyledButton
+				type="button"
+				onClick={() => {
+					navigate(-1);
+					resetModals();
+				}}
+				aria-label="Go back to previous Route">
 				{children}
 			</StyledButton>
 		</StyledShrinkMotionBlock>

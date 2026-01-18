@@ -5,7 +5,7 @@ import { EmptyMessage } from '..';
 import { ExpenseTracker, getAllPaymentsByMonth } from '../../supabase';
 import { useMediaQuery } from '../../hooks';
 import { priceUnit, PriceUnitType, queryKey, USD_GBP_EUR_SEPARATOR, WON_AND_JPY_SEPARATOR, ZERO_PRICE } from '../../constants';
-import { type Month, formatByKoreanTime, getMonthIndexFromMonths, monetizeWithSeparator } from '../../utils';
+import { type Month, currentYear, formatByKoreanTime, getMonthIndexFromMonths, monetizeWithSeparator } from '../../utils';
 
 interface ExpenseChartProps {
 	selectMonth: Month;
@@ -17,7 +17,7 @@ const ExpenseChart = ({ selectMonth, priceUnitType }: ExpenseChartProps) => {
 
 	const { data: expenses } = useSuspenseQuery<ExpenseTracker[]>({
 		queryKey: [...queryKey.EXPENSE_TRACKER, 'report', selectMonth],
-		queryFn: () => getAllPaymentsByMonth(monthIndex),
+		queryFn: () => getAllPaymentsByMonth({ year: currentYear, month: monthIndex }),
 	});
 
 	const [isSmallMobile, isMediumMobile] = [useMediaQuery('(max-width: 320px)'), useMediaQuery('(max-width: 430px)')];

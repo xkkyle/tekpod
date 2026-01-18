@@ -6,7 +6,6 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { supabase } from '../../supabase';
 import { getSubscribed, getUncompletedAlarms } from '../../supabase/api/alarm';
 import { queryKey, routes, staleTime } from '../../constants';
-// import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
 // TODO: add count of reminder_time < currentTime or new Todo
 const NotificationLink = () => {

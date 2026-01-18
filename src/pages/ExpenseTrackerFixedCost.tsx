@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import { Description, FixedCostList, FixedCostListLoader, FixedCostTotalPrice, FixedCostTotalPriceLoader } from '../components';
-import { months, currentMonth } from '../utils';
+import { months, currentMonth, currentYear } from '../utils';
 
 const ExpenseTrackerFixedCost = () => {
 	return (
@@ -13,7 +13,9 @@ const ExpenseTrackerFixedCost = () => {
 						<FixedCostTotalPrice />
 					</Suspense>
 				</TotalPrice>
-				<CurrentMonth>{months[currentMonth]}</CurrentMonth>
+				<CurrentYearAndMonth>
+					{currentYear} * {months[currentMonth]}
+				</CurrentYearAndMonth>
 			</Title>
 
 			<Description>Expected upcoming costs based on last month</Description>
@@ -34,7 +36,7 @@ const Title = styled.h2`
 	color: var(--grey900);
 `;
 
-const CurrentMonth = styled.span`
+const CurrentYearAndMonth = styled.span`
 	padding: calc(var(--padding-container-mobile) * 0.25) calc(var(--padding-container-mobile) * 0.5);
 	color: var(--white);
 	background-color: var(--black);
