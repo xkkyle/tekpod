@@ -6,7 +6,8 @@ const FitnessRecordsLoader = () => {
 			<div
 				css={{
 					display: 'grid',
-					gridTemplateColumns: 'repeat(5, 1fr)',
+					gridTemplateColumns: 'repeat(4, 1fr)',
+					gridAutoRows: '1fr',
 					gap: '8px',
 					margin: '32px auto 16px',
 				}}>
