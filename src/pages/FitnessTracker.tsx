@@ -1,6 +1,6 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
-import { FitnessRecords, LoadingSpinner, Select } from '../components';
+import { FitnessRecords, FitnessRecordsLoader, Select } from '../components';
 import { currentMonth, currentYear, getMonthIndexFromMonths, months, years } from '../utils';
 
 const FitnessTrackerPage = () => {
@@ -37,7 +37,7 @@ const FitnessTrackerPage = () => {
 				</Controller>
 			</SubHeader>
 
-			<Suspense fallback={<LoadingSpinner />}>
+			<Suspense fallback={<FitnessRecordsLoader />}>
 				<FitnessRecords yearAndMonth={yearAndMonth} />
 			</Suspense>
 		</section>
