@@ -11,29 +11,31 @@ const CommuteRecordsPage = () => {
 
 	return (
 		<section>
-			<Title>Commute Tracker</Title>
-			<Controller>
-				<Select
-					data={years}
-					placeholder={'Select Year'}
-					descriptionLabel={'Year'}
-					currentValue={yearAndMonth.year}
-					onSelect={option =>
-						setYearAndMonth({
-							...yearAndMonth,
-							year: option,
-							month: getMonthIndexFromMonths(yearAndMonth.month) >= currentMonth ? months[currentMonth] : yearAndMonth.month,
-						})
-					}
-				/>
-				<Select
-					data={+yearAndMonth.year === currentYear ? months.filter((_, idx) => idx <= currentMonth).reverse() : [...months].reverse()}
-					placeholder={'Select Month'}
-					descriptionLabel={'Month'}
-					currentValue={yearAndMonth.month}
-					onSelect={option => setYearAndMonth({ ...yearAndMonth, month: months[getMonthIndexFromMonths(option)] })}
-				/>
-			</Controller>
+			<SubHeader>
+				<Title>👨🏻‍💻</Title>
+				<Controller>
+					<Select
+						data={years}
+						placeholder={'Select Year'}
+						descriptionLabel={'Year'}
+						currentValue={yearAndMonth.year}
+						onSelect={option =>
+							setYearAndMonth({
+								...yearAndMonth,
+								year: option,
+								month: getMonthIndexFromMonths(yearAndMonth.month) >= currentMonth ? months[currentMonth] : yearAndMonth.month,
+							})
+						}
+					/>
+					<Select
+						data={+yearAndMonth.year === currentYear ? months.filter((_, idx) => idx <= currentMonth).reverse() : [...months].reverse()}
+						placeholder={'Select Month'}
+						descriptionLabel={'Month'}
+						currentValue={yearAndMonth.month}
+						onSelect={option => setYearAndMonth({ ...yearAndMonth, month: months[getMonthIndexFromMonths(option)] })}
+					/>
+				</Controller>
+			</SubHeader>
 
 			<Suspense fallback={<RecordsLoader />}>
 				<Records yearAndMonth={yearAndMonth} />
@@ -42,19 +44,21 @@ const CommuteRecordsPage = () => {
 	);
 };
 
+const SubHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
 const Title = styled.h2`
-	font-size: var(--fz-h5);
+	font-size: var(--fz-h4);
 	font-weight: var(--fw-black);
 `;
 
 const Controller = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 16px;
-	margin-top: 16px;
-	padding: calc(var(--padding-container-mobile) * 0.5);
-	background-color: var(--black);
-	border-radius: var(--radius-s);
+	gap: 8px;
 `;
 
 export default CommuteRecordsPage;

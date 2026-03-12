@@ -204,6 +204,28 @@ const toastData = {
 			return { status, message };
 		},
 	},
+	FITNESS: {
+		CREATE: {
+			SUCCESS: { status: 'success', message: `Add ${FIXED_SUCCESS_PHRASE}` },
+			WARN: { status: 'warn', message: `No value on field` },
+			ERROR: { status: 'error', message: `${FIXED_ERROR_MESSAGE_PHRASE} adding` },
+		},
+		EDIT: {
+			SUCCESS: { status: 'success', message: `Change record ${FIXED_SUCCESS_PHRASE}` },
+			WARN: { status: 'warn', message: `Not Edited at all` },
+			ERROR: { status: 'error', message: `${FIXED_ERROR_MESSAGE_PHRASE} changing record` },
+		},
+		REMOVE: {
+			SUCCESS: {
+				status: 'success',
+				message: `Remove record ${FIXED_SUCCESS_PHRASE}`,
+			},
+			ERROR: { status: 'error', message: `${FIXED_ERROR_MESSAGE_PHRASE} removing record` },
+		},
+		CUSTOM(status: Toast['status'], message: string) {
+			return { status, message };
+		},
+	},
 } as const;
 
 export default toastData;

@@ -2,46 +2,24 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isEqual } from 'es-toolkit';
 import { ModalDataType, ModalLayout } from '..';
 import { StatusSelect, Button, TextInput, Flex } from '../..';
-import { recordSchema, RecordSchema } from './schema';
-import { addCommute, CommuteRecord, removeCommute, ServiceDataType, updateCommute } from '../../../supabase';
+import { type FitnessRecordSchema, fitnessRecordSchema } from './schema';
+import { type ServiceDataType, type FitnessRecord, addFitnessRecord, updateFitnessRecord, removeFitnessRecord } from '../../../supabase';
 import { useClientSession, useLoading } from '../../../hooks';
 import { useToastStore } from '../../../store';
-import { queryKey, commuteStatusList, toastData, COMMUTE_STATUS } from '../../../constants';
-import { isEqual } from 'es-toolkit';
+import { queryKey, toastData, FITNESS_STATUS, fitnessStatusList } from '../../../constants';
 
-type CommuteRecordAction = 'ADD' | 'EDIT';
+type FitnessRecordAction = 'ADD' | 'EDIT';
 
 interface RecordModalProps {
 	id: string;
 	type: ModalDataType;
-	action: CommuteRecordAction;
-	data: ServiceDataType<CommuteRecord>;
+	action: FitnessRecordAction;
+	data: ServiceDataType<FitnessRecord>;
 	onClose: () => void;
 }
-
-/**
- * 1. 출근 버튼
- * 2. 상세 UI
- * 	- date
- *  - status
- *  - workplace
- *  - notes
- *
- */
-
-// TODO: add & Edit 을 조건부로 같은 RecordModal 활용?
-
-/**
- *
- * 조건부 렌더링 시 차이
- * - 'add' | 'edit'
- * - id type data
- * - defaultValues
- * - handleSubmit
- * - form 하위 elements
- */
 
 const userAction = {
 	ADD: 'ADD',
@@ -49,11 +27,11 @@ const userAction = {
 	REMOVE: 'REMOVE',
 } as const;
 
-const getDefaultValues = (action: CommuteRecordAction, data: ServiceDataType<CommuteRecord>) => {
+const getDefaultValues = (action: FitnessRecordAction, data: ServiceDataType<FitnessRecord>) => {
 	if (action === userAction.ADD) {
 		return {
-			status: COMMUTE_STATUS.PRESENT,
-			workplace: '',
+			status: FITNESS_STATUS.PRESENT,
+
 			notes: '',
 		};
 	}
@@ -61,13 +39,12 @@ const getDefaultValues = (action: CommuteRecordAction, data: ServiceDataType<Com
 	if (action === userAction.EDIT) {
 		return {
 			status: data?.status,
-			workplace: data?.workplace,
 			notes: data?.notes,
 		};
 	}
 };
 
-const RecordModal = ({ id, type, action, data: serviceData, onClose }: RecordModalProps) => {
+const FitnessRecordModal = ({ id, type, action, data: serviceData, onClose }: RecordModalProps) => {
 	const { queryClient, session } = useClientSession();
 	const defaultValues = getDefaultValues(action, serviceData);
 
@@ -77,37 +54,37 @@ const RecordModal = ({ id, type, action, data: serviceData, onClose }: RecordMod
 		formState: { errors },
 		setValue,
 		handleSubmit,
-	} = useForm<RecordSchema>({
-		resolver: zodResolver(recordSchema),
+	} = useForm<FitnessRecordSchema>({
+		resolver: zodResolver(fitnessRecordSchema),
 		defaultValues,
 	});
 
 	const { startTransition, Loading, isLoading } = useLoading();
 	const { addToast } = useToastStore();
 
-	const handleDeleteCommute = async () => {
+	const handleDeleteFitnessRecord = async () => {
 		try {
 			if (serviceData?.id) {
-				await startTransition(removeCommute({ id: serviceData?.id }));
+				await startTransition(removeFitnessRecord({ id: serviceData?.id }));
 
-				addToast(toastData.COMMUTE_RECORDS.REMOVE.SUCCESS);
+				addToast(toastData.FITNESS.REMOVE.SUCCESS);
 			}
 		} catch (e) {
 			console.error(e);
-			addToast(toastData.COMMUTE_RECORDS.REMOVE.ERROR);
+			addToast(toastData.FITNESS.REMOVE.ERROR);
 		} finally {
 			if (serviceData?.date) {
 				const _date = new Date(serviceData?.date);
 				onClose();
 
 				queryClient.invalidateQueries({
-					queryKey: [...queryKey.COMMUTE_RECORDS, `${_date.getFullYear()}-${(_date.getMonth() + 1 + '').padStart(2, '0')}`],
+					queryKey: [...queryKey.FITNESS_RECORDS, `${_date.getFullYear()}-${(_date.getMonth() + 1 + '').padStart(2, '0')}`],
 				});
 			}
 		}
 	};
 
-	const onSubmit = async (data: RecordSchema) => {
+	const onSubmit = async (data: FitnessRecordSchema) => {
 		if (!serviceData?.date) return;
 
 		const { date } = serviceData;
@@ -117,14 +94,14 @@ const RecordModal = ({ id, type, action, data: serviceData, onClose }: RecordMod
 		try {
 			const callback =
 				action === userAction.ADD
-					? addCommute({
+					? addFitnessRecord({
 							...data,
 							user_id: session?.user?.id,
 							date,
 							created_at: date,
 							updated_at: date,
 						})
-					: updateCommute({
+					: updateFitnessRecord({
 							...data,
 							id: serviceData?.id,
 							user_id: session?.user?.id,
@@ -132,22 +109,22 @@ const RecordModal = ({ id, type, action, data: serviceData, onClose }: RecordMod
 						});
 
 			if (action === 'EDIT' && isEqual(defaultValues, data)) {
-				addToast(toastData.COMMUTE_RECORDS.CUSTOM('warn', 'Notes are not changed'));
+				addToast(toastData.FITNESS.CUSTOM('warn', 'Notes are not changed'));
 				return;
 			}
 
 			await startTransition(callback);
 
-			addToast(toastData.COMMUTE_RECORDS[actionProperty].SUCCESS);
+			addToast(toastData.FITNESS[actionProperty].SUCCESS);
 		} catch (e) {
 			console.error(e);
-			addToast(toastData.COMMUTE_RECORDS[actionProperty].ERROR);
+			addToast(toastData.FITNESS[actionProperty].ERROR);
 		} finally {
 			const _date = new Date(date);
 			onClose();
 
 			queryClient.invalidateQueries({
-				queryKey: [...queryKey.COMMUTE_RECORDS, `${_date.getFullYear()}-${(_date.getMonth() + 1 + '').padStart(2, '0')}`],
+				queryKey: [...queryKey.FITNESS_RECORDS, `${_date.getFullYear()}-${(_date.getMonth() + 1 + '').padStart(2, '0')}`],
 			});
 		}
 	};
@@ -156,30 +133,24 @@ const RecordModal = ({ id, type, action, data: serviceData, onClose }: RecordMod
 		<ModalLayout id={id} type={type} title={'Add Record'} onClose={onClose}>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<StatusSelect
-					data={commuteStatusList}
+					data={fitnessStatusList}
 					currentValue={watch('status')}
 					error={errors['status']}
 					onSelect={data => {
 						setValue('status', data, { shouldValidate: true, shouldTouch: true });
-
-						if (watch('status') === 'absent') {
-							setValue('workplace', 'resting');
-						}
 					}}
 				/>
-				<TextInput errorMessage={errors['workplace']?.message}>
-					<TextInput.TextField id="workplace" {...register('workplace')} placeholder="Workplace" variant="sm" />
-				</TextInput>
+
 				<TextInput errorMessage={errors['notes']?.message}>
 					<TextInput.TextField id="notes" {...register('notes')} placeholder="Notes" variant="sm" />
 				</TextInput>
 				<ButtonGroup justifyContent={'space-between'} gap={'16px'} width={'100%'}>
 					{action === 'EDIT' && (
-						<DeleteButton type="button" onClick={handleDeleteCommute}>
+						<DeleteButton type="button" onClick={handleDeleteFitnessRecord}>
 							Delete
 						</DeleteButton>
 					)}
-					<SubmitButton type="submit">{isLoading ? Loading : action === 'EDIT' ? 'Edit my work' : 'Get to work'}</SubmitButton>
+					<SubmitButton type="submit">{isLoading ? Loading : action === 'EDIT' ? 'Edit my record' : 'Save my record'}</SubmitButton>
 				</ButtonGroup>
 			</Form>
 		</ModalLayout>
@@ -236,4 +207,4 @@ const SubmitButton = styled(Button)`
 	}
 `;
 
-export default RecordModal;
+export default FitnessRecordModal;

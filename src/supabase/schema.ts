@@ -1,6 +1,6 @@
 import { Database } from './database.types';
 
-type TableRowData = Diary | Recipe | Todo | ExpenseTracker | User | CommuteRecord;
+type TableRowData = Diary | Recipe | Todo | ExpenseTracker | User | CommuteRecord | FitnessRecord;
 
 // {} => Record<string, never>, based on eslint ban-types
 type ServiceDataType<T = TableRowData, D = Record<string, never>> = (T & D) | Partial<T & D> | null;
@@ -12,6 +12,7 @@ type ExpenseTracker = Database['public']['Tables']['expense_tracker']['Row'];
 type User = Database['public']['Tables']['users']['Row'];
 type CommuteRecord = Database['public']['Tables']['commute_records']['Row'];
 type Alarm = Database['public']['Tables']['alarm']['Row'];
+type FitnessRecord = Database['public']['Tables']['fitness_records']['Row'];
 
 interface RestrictedRecipe extends Recipe {
 	dynamic_range: 'DR-Auto' | `DR-${'number'}`;
@@ -39,4 +40,5 @@ export type {
 	User,
 	CommuteRecord,
 	Alarm,
+	FitnessRecord,
 };

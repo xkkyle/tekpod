@@ -4,7 +4,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { MODAL_CONFIG, ModalActionMap, modalType } from '../modal';
 import { COMMUTE_STATUS, queryKey, StatusOption } from '../../constants';
 import { CommuteRecord, getMonthlyRecords } from '../../supabase';
-import { calendar, formatByKoreanTime, getMonthIndexFromMonths, Month } from '../../utils';
+import { type Month, calendar, formatByKoreanTime, getMonthIndexFromMonths } from '../../utils';
 import { useModalStore } from '../../store';
 import { useClientSession } from '../../hooks';
 
@@ -81,12 +81,12 @@ const Records = ({ yearAndMonth: { year, month } }: RecordsProps) => {
 								{workedDay?.status === 'present'
 									? '🏢'
 									: workedDay?.status === 'remote'
-									? '💼'
-									: workedDay?.status === 'half_day'
-									? '🥝'
-									: workedDay?.status === 'absent'
-									? '💤'
-									: '🏝️'}
+										? '💼'
+										: workedDay?.status === 'half_day'
+											? '🥝'
+											: workedDay?.status === 'absent'
+												? '💤'
+												: '🏝️'}
 							</Emoji>
 						</Day>
 					);
@@ -145,15 +145,15 @@ const Day = styled.li<{ status: StatusOption }>`
 		status === 'absent'
 			? 'var(--grey50)'
 			: status === 'present' || status === 'remote' || status === 'half_day'
-			? 'var(--blue100)'
-			: 'var(--grey50)'};
+				? 'var(--blue100)'
+				: 'var(--grey50)'};
 	border: 1px solid
 		${({ status }) =>
 			status === 'absent' || status === 'half_day'
 				? 'var(--blue300)'
 				: status === 'present' || status === 'remote'
-				? 'var(--blue400)'
-				: 'var(--grey100)'};
+					? 'var(--blue400)'
+					: 'var(--grey100)'};
 	border-radius: var(--radius-s);
 	cursor: pointer;
 

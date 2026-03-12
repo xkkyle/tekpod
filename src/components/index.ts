@@ -5,6 +5,7 @@ export * from './content';
 export * from './diary';
 export * from './expenseTracker';
 export * from './filmRecipe';
+export * from './fitness';
 export * from './layout';
 export * from './modal';
 export * from './provider';

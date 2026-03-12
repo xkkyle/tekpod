@@ -12,6 +12,7 @@ const queryKey = {
 	ALARM_NOT_COMPLETED: ['alarm', 'not_completed'],
 	EXPENSE_TRACKER: ['expense_tracker'],
 	COMMUTE_RECORDS: ['commute_records'],
+	FITNESS_RECORDS: ['fitness_records'],
 } as const;
 
 export default queryKey;

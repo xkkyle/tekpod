@@ -308,6 +308,42 @@ export interface Database {
 					id: never;
 				};
 			};
+			fitness_records: {
+				Row: {
+					// the data expected from .select()
+					id: string;
+					user_id: string;
+					date: string;
+					status: 'present' | 'absent';
+					notes: string;
+					created_at: string;
+					updated_at: string;
+				};
+				Insert: {
+					// the data to be passed to .insert()
+					id?: never; // generated columns must not be supplied
+					user_id: string;
+					date: string;
+					status: 'present' | 'absent';
+					notes?: string;
+					created_at: string;
+					updated_at: string;
+				};
+				Update: {
+					// the data to be passed to .update()
+					id: never;
+					user_id: string;
+					date?: string;
+					status?: 'present' | 'absent';
+					notes?: string;
+					created_at?: string;
+					updated_at?: string;
+				};
+				Delete: {
+					// the data to be passed to .delete()
+					id: never;
+				};
+			};
 		};
 	};
 }

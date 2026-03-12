@@ -11,6 +11,7 @@ import {
 	RecordModal,
 	EditPaymentModal,
 } from '.';
+import { FitnessRecordModal } from './fitnessRecords';
 
 const modalType = {
 	EXPENSE_TRACKER: 'expense_tracker',
@@ -19,6 +20,7 @@ const modalType = {
 	USER: 'user',
 	TODO_REMINDER: 'todo_reminder',
 	COMMUTE_RECORDS: 'commute_records',
+	FITNESS_RECORDS: 'fitness_records',
 } as const;
 
 type ModalDataType = (typeof modalType)[keyof typeof modalType];
@@ -31,6 +33,7 @@ type ModalActionMap = {
 	[modalType.USER]: 'RESET_PASSWORD' | 'PROFILE';
 	[modalType.TODO_REMINDER]: 'EDIT';
 	[modalType.COMMUTE_RECORDS]: 'ADD' | 'EDIT';
+	[modalType.FITNESS_RECORDS]: 'ADD' | 'EDIT';
 };
 
 type ModalConfigItem = {
@@ -101,6 +104,18 @@ const MODAL_CONFIG: ModalConfig = {
 		EDIT: {
 			type: modalType.COMMUTE_RECORDS,
 			Component: RecordModal,
+			action: 'edit',
+		},
+	},
+	FITNESS_RECORDS: {
+		ADD: {
+			type: modalType.FITNESS_RECORDS,
+			Component: FitnessRecordModal,
+			action: 'add',
+		},
+		EDIT: {
+			type: modalType.FITNESS_RECORDS,
+			Component: FitnessRecordModal,
 			action: 'edit',
 		},
 	},

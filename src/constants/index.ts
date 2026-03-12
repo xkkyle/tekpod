@@ -1,5 +1,6 @@
 export * from './commuteRecords';
 export * from './expenseTracker';
+export * from './fitnessRecords';
 export * from './recipes';
 export * from './routes';
 

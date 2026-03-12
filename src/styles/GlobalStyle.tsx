@@ -54,6 +54,7 @@ const Global = css`
 		--blue200: #1c9eff;
 		--blue300: #b1dcfd;
 		--blue400: #7fc7ff;
+		--gradient-blue50: linear-gradient(270deg, #d0e8fd 0%, #a8cbff 40%, #a1c3fd 100%);
 		--gradient-blue100: linear-gradient(135deg, #a1c4fd 0%, #6fa8ff 40%, #3f5efb 100%);
 		--gradient-blue200: linear-gradient(145deg, #667eea 0%, #4facfe 100%);
 
@@ -133,8 +134,22 @@ const Global = css`
 		padding: 0;
 		border: 0;
 		vertical-align: baseline;
-		font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Mona-Sans',
-			'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+		font-family:
+			'Pretendard Variable',
+			Pretendard,
+			-apple-system,
+			BlinkMacSystemFont,
+			system-ui,
+			Roboto,
+			'Helvetica Neue',
+			'Mona-Sans',
+			'Segoe UI',
+			'Apple SD Gothic Neo',
+			'Noto Sans KR',
+			'Malgun Gothic',
+			'Apple Color Emoji',
+			'Segoe UI Emoji',
+			'Segoe UI Symbol',
 			sans-serif;
 
 		word-break: keep-all;
