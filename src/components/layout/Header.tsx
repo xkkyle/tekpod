@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { IoIosArrowBack } from 'react-icons/io';
+import { ChevronLeft } from 'lucide-react';
 import { GoBackButton, AddQuickDrawerMemoButton, Logo, NotificationLink } from '..';
 import { routes } from '../../constants';
 
@@ -20,7 +20,7 @@ const Header = () => {
 					<ReactiveLogo>
 						{isGoBackButtonActive ? (
 							<GoBackButton>
-								<IoIosArrowBack size="24" color="var(--grey700)" />
+								<ChevronLeft size="24" color="var(--grey800)" />
 							</GoBackButton>
 						) : (
 							<Logo />

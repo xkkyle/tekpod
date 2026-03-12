@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import { RiArrowRightSLine } from 'react-icons/ri';
+import { ChevronRight } from 'lucide-react';
 import { Button, ShrinkMotionBlock, MODAL_CONFIG, FavoriteDevice, SkeletonLoader, Group } from '../components';
 import { supabase } from '../supabase';
 import { useClientSession, useLoading } from '../hooks';
@@ -61,7 +61,7 @@ const UpdateProfile = () => {
 					<Label>Nickname</Label>
 					<dd>
 						<span>{session.user?.user_metadata?.nickname}</span>
-						<RiArrowRightSLine size="21" />
+						<ChevronRight size="18" />
 					</dd>
 				</Nickname>
 				<Group>

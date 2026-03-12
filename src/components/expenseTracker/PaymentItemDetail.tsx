@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { RiArrowRightSLine } from 'react-icons/ri';
+import { ChevronRight } from 'lucide-react';
 import { MODAL_CONFIG, ShrinkMotionBlock } from '..';
 import { useModalStore } from '../../store';
 import { ExpenseTracker, ServiceDataType } from '../../supabase';
@@ -28,7 +28,7 @@ const PaymentItemDetail = ({ title, description, data }: PaymentItemDetailProps)
 			<dt>{title}</dt>
 			<dd>
 				<span>{description}</span>
-				<RiArrowRightSLine size="21" color="var(--black)" />
+				<ChevronRight size="21" color="var(--black)" />
 			</dd>
 		</Container>
 	);

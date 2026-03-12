@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 import { Header, BottomNav, LayoutLoadingSpinner, QuickMemoDrawer, ModalContainer } from '..';
 import { useInitialScrollToTop } from '../../hooks';
-import { NavermapsProvider } from 'react-naver-maps';
 
 const layoutCss = {
 	wrapper: css`
@@ -41,17 +40,15 @@ const Layout = () => {
 
 	return (
 		<Suspense fallback={<LayoutLoadingSpinner />}>
-			<NavermapsProvider ncpKeyId={import.meta.env.VITE_REACT_NAVER_MAPS_CLIENT_KEY}>
-				<div id="layout-container" ref={layoutRef} css={layoutCss.wrapper}>
-					<Header />
-					<main id="layout-contents" css={layoutCss.main}>
-						<Outlet />
-					</main>
-					<BottomNav />
-					<QuickMemoDrawer />
-				</div>
-				<ModalContainer />
-			</NavermapsProvider>
+			<div id="layout-container" ref={layoutRef} css={layoutCss.wrapper}>
+				<Header />
+				<main id="layout-contents" css={layoutCss.main}>
+					<Outlet />
+				</main>
+				<BottomNav />
+				<QuickMemoDrawer />
+			</div>
+			<ModalContainer />
 		</Suspense>
 	);
 };

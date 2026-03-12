@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { BiMessageSquareEdit } from 'react-icons/bi';
+import { SquarePen } from 'lucide-react';
 import { isEqual } from 'es-toolkit';
 import { ModalLayout, type ModalDataType, editContentFormSchema, EditContentFormSchema } from '..';
 import { Button, TagsInput, TextArea, TextInput } from '../..';
@@ -83,7 +83,7 @@ const EditDiaryContentModal = ({ id, type, data, onClose }: EditDiaryContentModa
 	};
 
 	return (
-		<ModalLayout id={id} type={type} title={<BiMessageSquareEdit size="32" color="var(--black)" />} onClose={onClose}>
+		<ModalLayout id={id} type={type} title={<SquarePen size="27" color="var(--black)" />} onClose={onClose}>
 			<Group onSubmit={handleSubmit(onSubmit)}>
 				<TextInput errorMessage={errors?.title?.message}>
 					<TextInput.TextField id="title" {...register('title')} placeholder="﹡ Title" />

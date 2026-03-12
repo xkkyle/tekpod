@@ -1,6 +1,6 @@
 import { AnimationEvent, ReactNode, useState } from 'react';
 import styled from '@emotion/styled';
-import { MdOutlineAdd } from 'react-icons/md';
+import { Plus } from 'lucide-react';
 import { Button, Portal } from '..';
 import { useTriggerEscape } from '../../hooks';
 import { customPropReceiver } from '../../constants';
@@ -120,7 +120,7 @@ const AdditionalActions = styled.div<{ isShown: boolean }>`
 	justify-content: flex-end;
 `;
 
-const RotatableSvg = styled(MdOutlineAdd, customPropReceiver)<{ $isActive: boolean }>`
+const RotatableSvg = styled(Plus, customPropReceiver)<{ $isActive: boolean }>`
 	transform: ${({ $isActive }) => ($isActive ? 'rotate(45deg)' : 'rotate(0deg)')};
 	transition: transform 0.1s ease-in-out;
 `;
@@ -136,7 +136,9 @@ const Overlay = styled.div<{ isOpen: boolean }>`
 	visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
 	opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
 	z-index: calc(var(--drawer-index) - 1);
-	transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	transition:
+		visibility 0.3s ease-in-out,
+		opacity 0.3s ease-in-out;
 	cursor: pointer;
 	animation: ${({ isOpen }) => (isOpen ? 'fadeIn 0.3s ease forwards' : 'fadeOut 0.2s ease forwards')};
 

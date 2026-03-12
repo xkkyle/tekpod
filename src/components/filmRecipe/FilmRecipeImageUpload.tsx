@@ -1,6 +1,6 @@
 import { ChangeEvent, forwardRef, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { RiCloseFill } from 'react-icons/ri';
+import { X } from 'lucide-react';
 import { Button } from '../common';
 import { customPropReceiver } from '../../constants';
 
@@ -30,7 +30,7 @@ const FilmRecipeImageUpload = forwardRef<HTMLInputElement, FilmRecipeImageUpload
 					<img src={imageUrl} alt="preview_image" />
 				</PreviewImage>
 				<CloseButton type="button" $isAttached={isAttached} onClick={onImageRemove}>
-					<RiCloseFill size="24" color="var(--black)" />
+					<X size="21" color="var(--black)" />
 				</CloseButton>
 			</ImageUploadInput>
 		);

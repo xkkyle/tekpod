@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { RiCloseFill } from 'react-icons/ri';
+import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Flex, Button } from '.';
 import { status, useToastStore } from '../../store';
@@ -24,7 +24,7 @@ const Toast = () => {
 					<Message>{toast?.message}</Message>
 				</Flex>
 				<RemoveToastButton type="button" onClick={removeToast}>
-					<RiCloseFill size="21" color="var(--white)" />
+					<X size="21" color="var(--white)" />
 				</RemoveToastButton>
 			</Container>
 		</MotionBlock>
@@ -70,12 +70,12 @@ const Status = styled.span<{ status: 'success' | 'warn' | 'info' | 'error' }>`
 		status === 'success'
 			? 'var(--green200)'
 			: status === 'warn'
-			? 'var(--orange600)'
-			: status === 'info'
-			? 'var(--blue200)'
-			: status === 'error'
-			? 'var(--red200)'
-			: 'var(--grey400)'};
+				? 'var(--orange600)'
+				: status === 'info'
+					? 'var(--blue200)'
+					: status === 'error'
+						? 'var(--red200)'
+						: 'var(--grey400)'};
 `;
 
 const Message = styled.p`
@@ -89,7 +89,8 @@ const RemoveToastButton = styled(Button)`
 	justify-content: center;
 	align-items: center;
 	padding: calc(var(--padding-container-mobile) * 0.15);
-	background-color: var(--black);
+	background-color: var(--grey900);
+	border-radius: var(--radius-extra);
 `;
 
 export default Toast;

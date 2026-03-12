@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { IoMdNotificationsOutline } from 'react-icons/io';
+import { Bell } from 'lucide-react';
 import { supabase } from '../../supabase';
 import { getSubscribed, getUncompletedAlarms } from '../../supabase/api/alarm';
 import { queryKey, routes, staleTime } from '../../constants';
@@ -29,7 +29,7 @@ const NotificationLink = () => {
 
 	return (
 		<Container to={routes.NOTIFICATION}>
-			<IoMdNotificationsOutline size="24" color="var(--black)" />
+			<Bell size="21" color="var(--black)" />
 			<Count>{data.count}</Count>
 		</Container>
 	);
@@ -61,7 +61,7 @@ const Count = styled.span`
 	width: 16px;
 	height: 16px;
 	color: var(--white);
-	background-color: var(--blue200);
+	background: var(--gradient-blue100);
 	border-radius: var(--radius-extra);
 	font-size: var(--fz-xs);
 	font-weight: var(--fw-medium);

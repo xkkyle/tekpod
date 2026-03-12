@@ -1,6 +1,6 @@
 import { AnimationEvent, Fragment, ReactNode, useState } from 'react';
 import styled from '@emotion/styled';
-import { CgClose } from 'react-icons/cg';
+import { X } from 'lucide-react';
 import { Button } from '..';
 import { type ModalDataType } from '.';
 import { useOverlayFixed, useTriggerEscape } from '../../hooks';
@@ -39,7 +39,7 @@ const ModalLayout = ({ id, type, title, onClose, children }: ModalLayoutProps) =
 				<Header id={`modal-${id}-header`}>
 					<Title>{title}</Title>
 					<CloseButton type="button" onClick={handleModalClose}>
-						<CgClose size="24" color="var(--black)" />
+						<X size="24" color="var(--black)" />
 					</CloseButton>
 				</Header>
 				<Body id={`modal-${id}-body`}>{children}</Body>

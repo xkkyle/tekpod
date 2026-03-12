@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
-import { IoMdArrowRoundForward } from 'react-icons/io';
+import { ArrowRight } from 'lucide-react';
 import { Button, ShrinkMotionBlock } from '../components';
 import { useUserStore } from '../store';
 import { navigationLinks, routes } from '../constants';
@@ -21,7 +21,7 @@ const MyPage = () => {
 				{navigationLinks.map(({ to, title }) => (
 					<Link to={to} key={to}>
 						<StyledShrinkMotionBlock>
-							<IoMdArrowRoundForward size="24" color="var(--grey300)" />
+							<ArrowRight size="24" strokeWidth="3" color="var(--grey300)" />
 							<span>{title}</span>
 						</StyledShrinkMotionBlock>
 					</Link>

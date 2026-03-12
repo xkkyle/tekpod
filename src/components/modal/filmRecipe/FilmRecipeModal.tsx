@@ -1,8 +1,7 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import placeholderImage from '../../../assets/placeholder-gray.webp';
-import { FaStar } from 'react-icons/fa';
-import { FaRegStar } from 'react-icons/fa6';
+import { Star } from 'lucide-react';
 import { MODAL_CONFIG, type ModalDataType } from '..';
 import {
 	ModalLayout,
@@ -171,7 +170,7 @@ const FilmRecipeModal = ({ id, type, data, onClose }: FilmRecipeModalProps) => {
 					<>
 						<Left>
 							<RankActivateButton type="button" onClick={() => setIsPrimary(!isPrimary)}>
-								{isPrimary ? <FaStar size="24" color="var(--blue200)" /> : <FaRegStar size="24" color="var(--blue200)" />}
+								<Star size="24" color="var(--blue200)" fill={isPrimary ? 'var(--blue200)' : 'var(--blue100)'} />
 							</RankActivateButton>
 							<CancelButton type="button" onClick={() => setEditing(false)}>
 								Cancel

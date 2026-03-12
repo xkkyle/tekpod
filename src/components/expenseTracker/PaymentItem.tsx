@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { FaWonSign } from 'react-icons/fa6';
-import { BsFillCreditCardFill } from 'react-icons/bs';
+import { DollarSign, CreditCard } from 'lucide-react';
 import { ExpenseTracker } from '../../supabase';
 import { monetizeWithSeparator } from '../../utils';
 
@@ -14,7 +13,7 @@ const PaymentItem = ({ data: { place, price, payment_method, bank } }: PaymentIt
 			onBlur={e => {
 				e.target.blur();
 			}}>
-			<WonIconWrapper>{payment_method === 'Card' ? <BsFillCreditCardFill size="18" /> : <FaWonSign size="18" />}</WonIconWrapper>
+			<WonIconWrapper>{payment_method === 'Card' ? <CreditCard size="18" /> : <DollarSign size="18" />}</WonIconWrapper>
 			<PaymentInfo>
 				<Main>
 					<div>
@@ -65,8 +64,9 @@ const WonIconWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	padding: calc(var(--padding-container-mobile) * 0.5);
-	color: var(--white);
-	background-color: var(--grey800);
+	color: var(--grey900);
+	background-color: var(--greyOpacity100);
+	border: 1px solid var(--grey300);
 	border-radius: var(--radius-m);
 `;
 

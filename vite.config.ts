@@ -1,34 +1,10 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-	const env = loadEnv(mode, process.cwd());
-
+export default defineConfig(() => {
 	return {
 		plugins: [react()],
-		server: {
-			proxy: {
-				'/api': {
-					target: 'https://openapi.naver.com',
-					changeOrigin: true,
-					rewrite: path => path.replace(/^\/api/, ''),
-					headers: {
-						'X-Naver-Client-Id': env.VITE_X_NAVER_CLIENT_ID || '',
-						'X-Naver-Client-Secret': env.VITE_X_NAVER_CLIENT_SECRET || '',
-					},
-				},
-				'/ntruss': {
-					target: 'https://maps.apigw.ntruss.com',
-					changeOrigin: true,
-					rewrite: path => path.replace(/^\/ntruss/, ''),
-					headers: {
-						'X-NCP-APIGW-API-KEY-ID': env.VITE_API_GATEWAY_API_KEY_ID || '',
-						'X-NCP-APIGW-API-KEY': env.VITE_API_GATEWAY_API_KEY || '',
-					},
-				},
-			},
-		},
+		server: {},
 		build: {
 			rollupOptions: {
 				output: {

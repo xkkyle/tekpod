@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { EmptyMessage, LoadingSpinner, MODAL_CONFIG, TodoItem } from '..';
-import { getTodosByPage, getTodosPageInfo, TODOS_PAGE_SIZE } from '../../supabase';
-import { useGetPaginationInfo, useInfinityScroll } from '../../hooks';
+import { getTodosByPage, TODOS_PAGE_SIZE } from '../../supabase';
+import { useInfiniteScroll } from '../../hooks';
 import { queryKey, staleTime } from '../../constants';
 import { ControlOption } from '../../pages/TodoReminder';
 import { useModalStore } from '../../store';
@@ -14,25 +14,13 @@ interface TodoListProps {
 }
 
 const TodoList = ({ controlOption }: TodoListProps) => {
-	const { calculatedTotalPage } = useGetPaginationInfo({
-		queryKey: queryKey.TODOS_PAGE_INFO,
-		queryFn: getTodosPageInfo,
-		staleTime: staleTime.TODOS.PAGE_INFO,
-		pageSize: TODOS_PAGE_SIZE,
-	});
-
 	const { data, hasNextPage, fetchNextPage } = useSuspenseInfiniteQuery({
 		queryKey: queryKey.TODOS_BY_PAGE,
 		queryFn: ({ pageParam }) => getTodosByPage(pageParam, TODOS_PAGE_SIZE),
 		initialPageParam: 1,
-		getNextPageParam: (lastPage, __, lastPageParam) => {
-			const currentPageSize = lastPage.length ?? 0;
-
-			if (currentPageSize && lastPageParam < calculatedTotalPage) {
-				return lastPageParam + 1;
-			}
-
-			return undefined;
+		getNextPageParam: (lastPage, allPages) => {
+			const isLastPage = lastPage.length < TODOS_PAGE_SIZE;
+			return isLastPage ? undefined : allPages.length + 1;
 		},
 		staleTime: staleTime.TODOS.ALL_WITH_PAGINATION,
 	});
@@ -43,7 +31,7 @@ const TodoList = ({ controlOption }: TodoListProps) => {
 	const [activeEditingTodoItemId, setActiveEditingTodoItemId] = useState<string | null>(null);
 	const [activeDraggingTodoItemId, setActiveDraggingTodoItemId] = useState<string | null>(null);
 
-	const targetRef = useInfinityScroll(fetchNextPage);
+	const targetRef = useInfiniteScroll(fetchNextPage);
 
 	const filteredData = data.pages
 		.flat()

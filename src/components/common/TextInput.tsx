@@ -1,6 +1,6 @@
 import { ChangeEvent, Children, cloneElement, FocusEvent, ForwardedRef, forwardRef, HTMLAttributes, ReactElement, useId } from 'react';
 import styled from '@emotion/styled';
-import { LuAsterisk } from 'react-icons/lu';
+import { Asterisk } from 'lucide-react';
 
 interface TextInputProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> {
 	children: ReactElement;
@@ -22,7 +22,7 @@ const TextInput = ({ children, label, errorMessage, ...props }: TextInputProps) 
 			})}
 			{errorMessage && (
 				<Message>
-					<LuAsterisk size="16" /> {errorMessage}
+					<Asterisk size="16" /> {errorMessage}
 				</Message>
 			)}
 		</Container>
@@ -103,8 +103,8 @@ const Input = styled.input<{ name: string; variant: 'sm' | 'md' | 'lg' }>`
 		variant === 'lg'
 			? 'var(--padding-container-mobile)'
 			: variant === 'md'
-			? 'calc(var(--padding-container-mobile) * 0.75)'
-			: 'calc(var(--padding-container-mobile) * 0.5)'};
+				? 'calc(var(--padding-container-mobile) * 0.75)'
+				: 'calc(var(--padding-container-mobile) * 0.5)'};
 	width: 100%;
 	font-size: ${({ variant }) => (variant === 'lg' ? 'var(--fz-h5)' : variant === 'md' ? 'var(--fz-h7)' : 'var(--fz-p)')};
 	font-weight: ${({ name }) => (name === 'title' ? 'var(--fw-semibold)' : 'var(--fw-regular)')};

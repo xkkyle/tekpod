@@ -1,9 +1,16 @@
 import styled from '@emotion/styled';
 import { Portal } from '..';
 import { useModalStore } from '../../store';
+import React from 'react';
 
 const ModalContainer = () => {
-	const { modals, removeModal } = useModalStore();
+	const { modals, removeModal, resetModals } = useModalStore();
+
+	React.useEffect(() => {
+		if (modals?.length === 0) {
+			resetModals();
+		}
+	}, [modals.length, resetModals]);
 
 	return (
 		<Portal>

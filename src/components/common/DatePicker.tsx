@@ -2,8 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { FieldError } from 'react-hook-form';
 import { DayPicker } from 'react-day-picker';
-import { IoMdCalendar } from 'react-icons/io';
-import { LuAsterisk } from 'react-icons/lu';
+import { Asterisk, Calendar } from 'lucide-react';
 import { ko } from 'date-fns/locale';
 import { Button } from '..';
 import { useClickOutside } from '../../hooks';
@@ -34,13 +33,13 @@ const DatePicker = ({ selected, setSelected, error, disabled, isFloated = false,
 		<Container ref={targetRef} isFloated={isFloated}>
 			<TriggerButton type="button" $isDaySelected={selected ? true : false} onClick={() => setIsOpen(!isOpen)} $isOpen={isOpen}>
 				<IconBackground>
-					<IoMdCalendar size="24" color="var(--grey800)" />
+					<Calendar size="20" strokeWidth="2" color="var(--grey800)" />
 				</IconBackground>
 				<span>{selected ? formatByKoreanTime(selected) : 'Select Date'}</span>
 			</TriggerButton>
 			{error && (
 				<ErrorMessage>
-					<LuAsterisk size="16" /> {error?.message}
+					<Asterisk size="16" /> {error?.message}
 				</ErrorMessage>
 			)}
 			<DayPickerWrapper isFloated={isFloated}>
@@ -79,9 +78,8 @@ const Container = styled.div<{ isFloated: boolean }>`
 const TriggerButton = styled(Button, customPropReceiver)<{ $isDaySelected: boolean; $isOpen: boolean }>`
 	display: inline-flex;
 	align-items: center;
-	gap: 6px;
+	gap: 8px;
 	padding: calc(var(--padding-container-mobile) * 0.75) var(--padding-container-mobile);
-
 	color: ${({ $isDaySelected }) => ($isDaySelected ? 'var(--grey900)' : 'var(--grey500)')};
 	background-color: ${({ $isOpen }) => ($isOpen ? 'var(--white)' : 'var(--greyOpacity50)')};
 	border: ${({ $isOpen }) => `1px solid ${$isOpen ? 'var(--grey300)' : 'var(--grey100)'}`};

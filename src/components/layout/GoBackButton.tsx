@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import { RiArrowLeftLine } from 'react-icons/ri';
+import { ChevronLeft } from 'lucide-react';
 import { Button, ShrinkMotionBlock } from '..';
 import { useModalStore } from '../../store';
 
@@ -9,7 +9,7 @@ interface GoBackButtonProps {
 	children?: ReactNode;
 }
 
-const GoBackButton = ({ children = <RiArrowLeftLine size="24" color="var(--grey500)" /> }: GoBackButtonProps) => {
+const GoBackButton = ({ children = <ChevronLeft size="24" color="var(--grey700)" /> }: GoBackButtonProps) => {
 	const navigate = useNavigate();
 	const { resetModals } = useModalStore();
 

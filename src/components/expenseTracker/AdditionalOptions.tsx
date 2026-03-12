@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import { MdOutlineAdd } from 'react-icons/md';
-import { RiArrowRightSLine } from 'react-icons/ri';
+import { Plus, ChevronRight } from 'lucide-react';
 import { formatByKoreanTime, formatByISOKoreanTime, today } from '../../utils';
 import { ShrinkMotionBlock } from '../common';
 import { useState } from 'react';
@@ -22,7 +21,7 @@ const AdditionalOptions = ({
 	const { addToast } = useToastStore();
 	const navigate = useNavigate();
 
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
 
 	const handleAddSameExpense = async () => {
 		const currentTime = new Date().toISOString();
@@ -66,7 +65,7 @@ const AdditionalOptions = ({
 			<OptionsList isOpen={isOpen}>
 				<li>
 					<Option onClick={handleAddSameExpense}>
-						<MdOutlineAdd size="18" color="var(--blue400)" />
+						<Plus size="18" color="var(--white)" />
 						<span>{isLoading ? Loading : `Add same expense info on ${formatByKoreanTime(today)}`} </span>
 					</Option>
 				</li>
@@ -97,7 +96,7 @@ const OptionsExpandTrigger = styled.div`
 	}
 `;
 
-const RotatableSvg = styled(RiArrowRightSLine, customPropReceiver)<{ $isOpen: boolean }>`
+const RotatableSvg = styled(ChevronRight, customPropReceiver)<{ $isOpen: boolean }>`
 	transform: ${({ $isOpen }) => ($isOpen ? 'rotate(90deg)' : 'rotate(0deg)')};
 	transition: transform 0.1s ease-in-out;
 `;
@@ -107,7 +106,9 @@ const OptionsList = styled.div<{ isOpen: boolean }>`
 	flex-direction: column;
 	gap: 16px;
 	height: ${({ isOpen }) => (isOpen ? '100%' : '0')};
-	transition: height 0.15s ease-in-out, display 0.3s ease-in-out;
+	transition:
+		height 0.15s ease-in-out,
+		display 0.3s ease-in-out;
 `;
 
 const Option = styled(ShrinkMotionBlock)`
@@ -117,12 +118,16 @@ const Option = styled(ShrinkMotionBlock)`
 	padding: var(--padding-container-mobile);
 	border: 1px solid var(--blue400);
 	border-radius: var(--radius-s);
-	color: var(--black);
-	background-color: var(--blue100);
+	color: var(--white);
+	background: var(--gradient-blue200);
+
+	&:active {
+		opacity: 0.9;
+	}
 
 	span {
 		font-weight: var(--fw-medium);
-		color: var(--blue200);
+		color: var(--white);
 
 		@media screen and (max-width: 640px) {
 			font-size: var(--fz-sm);

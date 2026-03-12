@@ -1,6 +1,6 @@
 import { FormEvent, Suspense, useState } from 'react';
 import styled from '@emotion/styled';
-import { BsPlus } from 'react-icons/bs';
+import { Plus } from 'lucide-react';
 import { Button, SegmentedControl, ShrinkMotionBlock, TextInput, TodoList, TodoListLoader } from '../components';
 import { addTodo } from '../supabase';
 import { useClientSession, useLoading } from '../hooks';
@@ -107,7 +107,7 @@ const TodoReminderPage = () => {
 				</TextInput>
 				<ShrinkMotionBlock>
 					<AddTodoButton type="submit" aria-label="Add todo">
-						{isLoading ? Loading : <BsPlus size="24" color="var(--white)" />}
+						{isLoading ? Loading : <Plus size="21" color="var(--white)" />}
 					</AddTodoButton>
 				</ShrinkMotionBlock>
 			</Form>
@@ -144,7 +144,7 @@ const AddTodoButton = styled(Button)`
 	font-weight: var(--fw-semibold);
 	color: var(--white);
 	background-color: var(--black);
-	border-radius: var(--radius-xs);
+	border-radius: var(--radius-m);
 `;
 
 export default TodoReminderPage;

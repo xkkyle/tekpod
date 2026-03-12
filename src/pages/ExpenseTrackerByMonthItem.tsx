@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaWonSign } from 'react-icons/fa6';
-import { BsFillCreditCardFill } from 'react-icons/bs';
-import { RiArrowRightSLine } from 'react-icons/ri';
+import { ChevronRight, CreditCard, DollarSign } from 'lucide-react';
 import { PaymentItemDetail, Switch, FloatingActionButton, AdditionalOptions } from '../components';
 import { useClientSession, useLoading, useTogglePaymentIsFixedMutation } from '../hooks';
 import { ExpenseTracker, removePayment } from '../supabase';
@@ -48,7 +46,7 @@ const ExpenseTrackerByMonthItemPage = () => {
 	return (
 		<Container>
 			<PaymentMethod>
-				<WonIconWrapper>{payment.payment_method === 'Card' ? <BsFillCreditCardFill size="14" /> : <FaWonSign size="14" />}</WonIconWrapper>
+				<WonIconWrapper>{payment.payment_method === 'Card' ? <CreditCard size="14" /> : <DollarSign size="14" />}</WonIconWrapper>
 				<span>{payment.payment_method}</span>
 			</PaymentMethod>
 			<Price>
@@ -81,7 +79,7 @@ const ExpenseTrackerByMonthItemPage = () => {
 							navigate(`${routes.EXPENSE_TRACKER_BY_MONTH}?date=${formatByISOKoreanTime(currentDate)}`, { state: { currentDate } })
 						}>
 						<span>{formatByKoreanTime(currentDate)}</span>
-						<RiArrowRightSLine size="21" color="var(--black)" />
+						<ChevronRight size="21" color="var(--black)" />
 					</dd>
 				</TransactionDateGroup>
 				<DetailGroup>

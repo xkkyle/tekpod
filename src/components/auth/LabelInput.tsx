@@ -1,7 +1,6 @@
 import { Children, cloneElement, ForwardedRef, forwardRef, HTMLAttributes, ReactElement, useId, useState } from 'react';
 import styled from '@emotion/styled';
-import { IoEyeOutline } from 'react-icons/io5';
-import { IoEyeOffOutline } from 'react-icons/io5';
+import { Eye, EyeClosed } from 'lucide-react';
 
 interface LabelInputProps extends HTMLAttributes<HTMLInputElement> {
 	label: string;
@@ -45,7 +44,7 @@ LabelInput.TextField = forwardRef(
 						onClick={() => setShowPassword(!showPassword)}
 						tabIndex={-1}
 						aria-label={showPassword ? 'Hide Password' : 'Show Password'}>
-						{showPassword ? <IoEyeOffOutline size="21" color="var(--black)" /> : <IoEyeOutline size="21" color="var(--black)" />}
+						{showPassword ? <EyeClosed size="19" color="var(--black)" /> : <Eye size="19" color="var(--black)" />}
 					</ToggleButton>
 				)}
 			</InputWrapper>

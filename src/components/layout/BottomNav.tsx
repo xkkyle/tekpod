@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
-import { RiBook3Line, RiCalculatorLine, RiHome6Line, RiUser3Line } from 'react-icons/ri';
+import { Calculator, Fan, Layers, User } from 'lucide-react';
 import { NavLink } from '.';
 import { useAuthQuery } from '../../hooks';
 import { routes } from '../../constants';
@@ -15,18 +15,18 @@ const BottomNav = () => {
 				<Container id="layout-gnb">
 					<Links>
 						<NavLink href={routes.HOME} aria-label="Link to Home Route">
-							<RiHome6Line size={24} />
+							<Fan size={24} />
 						</NavLink>
 						<NavLink href={routes.EXPENSE_TRACKER} aria-label="Link to Expense Tracker Route">
-							<RiCalculatorLine size={27} />
+							<Calculator size={27} />
 						</NavLink>
-						<NavLink href={routes.DIARY} aria-label="Link to Diary Route">
-							<RiBook3Line size={24} />
+						<NavLink href={routes.COMMUTE_TRACKER} aria-label="Link to Diary Route">
+							<Layers size={24} />
 						</NavLink>
 						<NavLink
 							href={data?.user ? `${routes.USER}` : routes.LOGIN}
 							aria-label={`Link to ${data?.user ? routes.USER.slice(1) : routes.LOGIN.slice(1)} Route`}>
-							<RiUser3Line size={24} />
+							<User size={24} />
 						</NavLink>
 					</Links>
 					<Spacer />
@@ -44,8 +44,8 @@ const Container = styled.nav`
 	width: 100%;
 	background-color: var(--white);
 	border-top: 1px solid var(--grey200);
-	border-top-left-radius: var(--radius-s);
-	border-top-right-radius: var(--radius-s);
+	border-top-left-radius: var(--radius-m);
+	border-top-right-radius: var(--radius-m);
 	z-index: var(--nav-index);
 `;
 

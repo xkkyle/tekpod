@@ -1,6 +1,6 @@
 import { ChangeEvent, Children, cloneElement, ForwardedRef, forwardRef, HTMLAttributes, ReactElement, useId, useRef } from 'react';
 import styled from '@emotion/styled';
-import { LuAsterisk } from 'react-icons/lu';
+import { Asterisk } from 'lucide-react';
 
 interface TextAreaProps {
 	children: ReactElement;
@@ -19,7 +19,7 @@ const TextArea = ({ children, errorMessage, ...props }: TextAreaProps) => {
 			{cloneElement(child, { id, ref, ...child.props })}
 			{errorMessage && (
 				<Message>
-					<LuAsterisk size="16" /> {errorMessage}
+					<Asterisk size="16" /> {errorMessage}
 				</Message>
 			)}
 		</Container>

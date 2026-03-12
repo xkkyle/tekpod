@@ -1,9 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
-import { MdUpcoming } from 'react-icons/md';
-import { IoCardOutline } from 'react-icons/io5';
-import { BsCalendar2MonthFill } from 'react-icons/bs';
+import { Calendar1, CalendarCheck } from 'lucide-react';
 import { Button, Select, ShrinkMotionBlock, TotalExpensePrice, TotalExpensePriceLoader, MODAL_CONFIG } from '../components';
 import { useModalStore } from '../store';
 import { routes } from '../constants';
@@ -12,17 +10,12 @@ import { type Month, months, currentMonth, getMonthIndexFromMonths, Year, years,
 const linkGroup = [
 	{
 		to: `${routes.EXPENSE_TRACKER}/daily`,
-		icon: <BsCalendar2MonthFill size="18" color="var(--blue100)" />,
+		icon: <Calendar1 size="18" strokeWidth="2" color="var(--blue100)" />,
 		title: 'Daily Transaction',
 	},
 	{
-		to: `${routes.EXPENSE_TRACKER}/credit_card`,
-		icon: <IoCardOutline size="18" color="var(--blue100)" />,
-		title: 'Credit Card Transaction',
-	},
-	{
 		to: `${routes.EXPENSE_TRACKER}/upcoming`,
-		icon: <MdUpcoming size="18" color="var(--blue100)" />,
+		icon: <CalendarCheck size="18" strokeWidth="2" color="var(--blue100)" />,
 		title: 'Upcoming Transaction',
 	},
 ];
@@ -50,6 +43,7 @@ const ExpenseTrackerPage = () => {
 			setTargetMonth(months[months.length - 1]);
 		}
 	}, [targetYear]);
+
 	return (
 		<section>
 			<TotalExpense>

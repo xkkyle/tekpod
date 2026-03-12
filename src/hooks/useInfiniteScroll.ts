@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const useInfinityScroll = (callback: () => void) => {
+const useInfiniteScroll = (callback: () => void) => {
 	const targetRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
@@ -22,4 +22,4 @@ const useInfinityScroll = (callback: () => void) => {
 	return targetRef;
 };
 
-export default useInfinityScroll;
+export default useInfiniteScroll;

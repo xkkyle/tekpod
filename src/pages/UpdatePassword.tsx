@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Asterisk } from 'lucide-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LuAsterisk } from 'react-icons/lu';
 import { AuthLogo, Button, LabelInput, updatePasswordSchema, UpdatePasswordSchema } from '../components';
 import { supabase } from '../supabase';
 import { useClientSession, useLoading } from '../hooks';
@@ -100,7 +100,9 @@ const UpdatePassword = () => {
 			<form css={pageCss.form} onSubmit={handleSubmit(onSubmit)}>
 				<AuthLogo />
 				<Title>
-					<LuAsterisk size="16" /> Update Password <LuAsterisk size="16" />
+					<Asterisk size="16" />
+					<span>Update Password</span>
+					<Asterisk size="16" />
 				</Title>
 
 				<EmailInfo>{searchParams.get('email') || state?.email}</EmailInfo>
@@ -120,13 +122,15 @@ const UpdatePassword = () => {
 
 const Title = styled.h4`
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	padding: calc(var(--padding-container-mobile) * 0.5);
 	min-width: 270px;
+	min-height: 56px;
 	color: var(--blue200);
 	background-color: var(--blue100);
 	font-size: var(--fz-h6);
-	font-weight: var(--fw-semibold);
+	font-weight: var(--fw-bold);
 	border-radius: var(--radius-s);
 	text-align: center;
 `;
@@ -137,7 +141,7 @@ const EmailInfo = styled.div`
 	border: 1px solid var(--greyOpacity100);
 	border-radius: var(--radius-s);
 	color: var(--grey700);
-	background-color: var(--greyOpacity100);
+	background-color: var(--greyOpacity50);
 	font-size: var(--fz-p);
 	font-weight: var(--fw-bold);
 `;

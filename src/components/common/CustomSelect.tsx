@@ -1,8 +1,7 @@
 import { useId, useState } from 'react';
 import styled from '@emotion/styled';
 import { FieldError } from 'react-hook-form';
-import { LuAsterisk } from 'react-icons/lu';
-import { BiSolidChevronRight } from 'react-icons/bi';
+import { Asterisk, ChevronRight } from 'lucide-react';
 import { Button } from '.';
 import type { ExpenseTracker, RestrictedRecipeForValidation } from '../../supabase';
 import { useClickOutside } from '../../hooks';
@@ -52,7 +51,7 @@ const CustomSelect = <T extends CustomSelectDataType>({
 			</SelectTrigger>
 			{error && (
 				<ErrorMessage>
-					<LuAsterisk size="16" /> {error?.message}
+					<Asterisk size="16" /> {error?.message}
 				</ErrorMessage>
 			)}
 
@@ -106,7 +105,7 @@ const SelectValue = styled.span<{ isTriggered: boolean }>`
 	color: ${({ isTriggered }) => (isTriggered ? 'var(--black)' : 'var(--grey400)')};
 `;
 
-const Chevron = styled(BiSolidChevronRight, customPropReceiver)<{ $isOpen: boolean }>`
+const Chevron = styled(ChevronRight, customPropReceiver)<{ $isOpen: boolean }>`
 	transform: ${({ $isOpen }) => ($isOpen ? 'rotate(90deg)' : 'rotate(0deg)')};
 	transition: transform 0.15s ease-in-out;
 `;

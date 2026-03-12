@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { RiCloseFill } from 'react-icons/ri';
-import { FiHash } from 'react-icons/fi';
+import { Hash, X } from 'lucide-react';
 import { Button } from '.';
 
 export interface Tag {
@@ -45,10 +44,10 @@ const TagsInput = ({ inputId, tags, onChange }: TagsInputProps) => {
 			}}>
 			{tags.map(({ id, tag }) => (
 				<Tag key={`${tag}_${id}`}>
-					<FiHash size="16" />
+					<Hash size="16" />
 					<span>{`${tag}`}</span>
 					<Button type="button" onClick={() => handleRemoveTag(id)}>
-						<RiCloseFill size="16" color="var(--black)" />
+						<X size="16" color="var(--black)" />
 					</Button>
 				</Tag>
 			))}

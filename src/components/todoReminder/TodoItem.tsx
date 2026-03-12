@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RiCloseFill } from 'react-icons/ri';
-import { RiInformation2Line } from 'react-icons/ri';
+import { Info, X } from 'lucide-react';
 import { todoItemSchema, TodoItemSchema } from '.';
 import { MODAL_CONFIG, Button, Checkbox, TextInput, SkeletonLoader, LoadingSpinner } from '..';
 import { editAlarm, type Todo } from '../../supabase';
@@ -113,9 +112,7 @@ const TodoItem = ({ id, todo, isContentEditing, isDragging, onEditingIdChange, o
 
 	return (
 		<Container ref={dragContainerRef}>
-			<DeleteBackground onClick={handleRemoveTodo}>
-				{isRemovePending ? <LoadingSpinner /> : <RiCloseFill size="24" color="white" />}
-			</DeleteBackground>
+			<DeleteBackground onClick={handleRemoveTodo}>{isRemovePending ? <LoadingSpinner /> : <X size="24" color="white" />}</DeleteBackground>
 			<TodoContent
 				isContentEditing={isContentEditing}
 				dragX={dragX}
@@ -155,7 +152,7 @@ const TodoItem = ({ id, todo, isContentEditing, isDragging, onEditingIdChange, o
 											/>
 										</TextInput>
 										<ContentEditingInfoButton type="button" onClick={handleTodoItemEditModal}>
-											<RiInformation2Line size="22" color="var(--grey600)" />
+											<Info size="22" color="var(--grey600)" />
 										</ContentEditingInfoButton>
 										<TodoItemContentSubmitButton type="submit">Submit</TodoItemContentSubmitButton>
 									</ContentEditingForm>

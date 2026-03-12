@@ -1,36 +1,24 @@
 import styled from '@emotion/styled';
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { getDiariesByPage, getDiariesPageInfo, DIARY_PAGE_SIZE, type Diary } from '../../supabase';
+import { getDiariesByPage, DIARY_PAGE_SIZE, type Diary } from '../../supabase';
 import { EmptyMessage, LoadingSpinner } from '..';
-import { useGetPaginationInfo, useInfinityScroll } from '../../hooks';
+import { useInfiniteScroll } from '../../hooks';
 import { routes, staleTime, queryKey } from '../../constants';
 
 const DiaryContent = () => {
-	const { calculatedTotalPage } = useGetPaginationInfo({
-		queryKey: queryKey.DIARY_PAGE_INFO,
-		queryFn: getDiariesPageInfo,
-		staleTime: staleTime.DIARY.PAGE_INFO,
-		pageSize: DIARY_PAGE_SIZE,
-	});
-
 	const { data, hasNextPage, fetchNextPage } = useSuspenseInfiniteQuery({
 		queryKey: queryKey.DIARY_BY_PAGE,
 		queryFn: ({ pageParam }) => getDiariesByPage(pageParam, DIARY_PAGE_SIZE),
 		initialPageParam: 1,
-		getNextPageParam: (lastPage, __, lastPageParam) => {
-			const currentPageSize = lastPage?.length ?? 0;
-
-			if (currentPageSize && lastPageParam < calculatedTotalPage) {
-				return lastPageParam + 1;
-			}
-
-			return undefined; // explicit return
+		getNextPageParam: (lastPage, allPages) => {
+			const isLastPage = lastPage.length < DIARY_PAGE_SIZE;
+			return isLastPage ? undefined : allPages.length + 1;
 		},
 		staleTime: staleTime.DIARY.ALL_WITH_PAGINATION,
 	});
 
-	const targetRef = useInfinityScroll(fetchNextPage);
+	const targetRef = useInfiniteScroll(fetchNextPage);
 
 	return (
 		<>

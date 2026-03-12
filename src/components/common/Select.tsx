@@ -1,7 +1,6 @@
 import { useId, useState } from 'react';
 import styled from '@emotion/styled';
-import { BiSolidChevronRight } from 'react-icons/bi';
-import { LuAsterisk } from 'react-icons/lu';
+import { ChevronRight, Asterisk } from 'lucide-react';
 import { FieldError } from 'react-hook-form';
 import { Button } from '..';
 import { customPropReceiver } from '../../constants';
@@ -37,7 +36,7 @@ const Select = <T extends string>({ data: options, placeholder, descriptionLabel
 			</SelectTrigger>
 			{error && (
 				<ErrorMessage>
-					<LuAsterisk size="16" /> {error?.message}
+					<Asterisk size="16" /> {error?.message}
 				</ErrorMessage>
 			)}
 			<SelectContent isOpen={isOpen} aria-labelledby={`select-${generatedId}-content`}>
@@ -91,7 +90,7 @@ const SelectTrigger = styled(Button)`
 	}
 `;
 
-const Chevron = styled(BiSolidChevronRight, customPropReceiver)<{ $isOpen: boolean }>`
+const Chevron = styled(ChevronRight, customPropReceiver)<{ $isOpen: boolean }>`
 	transform: ${({ $isOpen }) => ($isOpen ? 'rotate(90deg)' : 'rotate(0deg)')};
 	transition: transform 0.15s ease-in-out;
 `;

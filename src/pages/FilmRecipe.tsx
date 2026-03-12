@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import styled from '@emotion/styled';
-import { BsPlus } from 'react-icons/bs';
+import { Plus } from 'lucide-react';
 import { Button, FilmRecipeContent, FilmRecipeContentLoader, MODAL_CONFIG, MyDevice, SkeletonLoader } from '../components';
 import { useModalStore } from '../store';
 
@@ -24,7 +24,7 @@ const FilmRecipePage = () => {
 				Recipes
 			</Title>
 			<AddButton type="button" onClick={handleAddFilmRecipeModal}>
-				<BsPlus size="24" color="var(--white)" />
+				<Plus size="24" color="var(--white)" />
 			</AddButton>
 			<Suspense fallback={<FilmRecipeContentLoader />}>
 				<FilmRecipeContent />
@@ -55,6 +55,7 @@ const AddButton = styled(Button)`
 	font-size: var(--fz-h7);
 	font-weight: var(--fw-bold);
 	border-radius: var(--radius-m);
+	z-index: var(--nav-index);
 
 	&:hover,
 	&:active {

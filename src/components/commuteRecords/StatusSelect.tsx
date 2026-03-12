@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { FieldError } from 'react-hook-form';
-import { LuAsterisk } from 'react-icons/lu';
+import { Asterisk } from 'lucide-react';
 
 interface StatusSelectProps<T extends string> {
 	data: readonly T[];
@@ -23,7 +23,7 @@ const StatusSelect = <T extends string>({ data, currentValue, error, onSelect }:
 			</Options>
 			{error && (
 				<ErrorMessage>
-					<LuAsterisk size="16" /> {error?.message}
+					<Asterisk size="16" /> {error?.message}
 				</ErrorMessage>
 			)}
 		</Container>
@@ -54,7 +54,9 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	background-color: ${({ isCurrent }) => (isCurrent ? 'var(--grey100)' : 'var(--white)')};
 	border-radius: var(--radius-s);
 	font-weight: ${({ isCurrent }) => (isCurrent ? 'var(--fw-bold)' : 'var(--fw-regular)')};
-	transition: background-color 0.15s ease-in-out, font-weight 0.15s ease-in-out;
+	transition:
+		background-color 0.15s ease-in-out,
+		font-weight 0.15s ease-in-out;
 
 	&:hover,
 	&:focus {
