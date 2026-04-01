@@ -13,10 +13,10 @@ const getMonthlyFitnessRecords = async ({
 	user_id: string;
 }): Promise<FitnessRecord[]> => {
 	const startDate = `${year}-${`${month}`.padStart(2, '0')}-01`;
-	const endDate = `${year}-${`${month}`.padStart(2, '0')}-${new Date(year, month, 0, 23, 59, 59, 999).getDate()}`;
+	const nextMonth = month === 12 ? `${year + 1}-01-01` : `${year}-${`${month + 1}`.padStart(2, '0')}-01`;
 
-	const { data, error } = await supabase.from(TABLE).select('*').eq('user_id', user_id).gte('date', startDate).lte('date', endDate);
-
+	const { data, error } = await supabase.from(TABLE).select('*').eq('user_id', user_id).gte('date', startDate).lt('date', nextMonth);
+	console.log(data);
 	if (error) throw error;
 
 	return data;
