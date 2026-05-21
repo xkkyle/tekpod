@@ -15,7 +15,7 @@
 - TodoReminder : Write todos which are to be checked in need
 - Commute Tracker : Keep track of commuting records
 - PomodoroTimer : Helps us stand up consistently from our seat, supporting our back and neck health
-- Favorite Place(WIP) : Add personal favorite places on Map
+- Fitness Tracker : Record how many times I go to gym in every single month
 
 ## Tech Stacks
 
