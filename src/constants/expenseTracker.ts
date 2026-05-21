@@ -1,4 +1,5 @@
 import shinhanSvg from '../assets/bank/shinhan.svg';
+import hyundaiSvg from '../assets/bank/hyundai.svg';
 import hanaSvg from '../assets/bank/hana.svg';
 import kookminSvg from '../assets/bank/kookmin.svg';
 import wooriSvg from '../assets/bank/woori.svg';
@@ -34,7 +35,21 @@ const paymentMethod = {
 
 const paymentData = {
 	paymentMethod: [paymentMethod.CARD, paymentMethod.CASH],
-	banks: ['신한', '하나', '국민', '우리', 'IBK기업', '농협', '카카오뱅크', '토스뱅크', '새마을', 'SC제일', '씨티', '해당없음'] as const,
+	banks: [
+		'신한',
+		'현대',
+		'하나',
+		'국민',
+		'우리',
+		'IBK기업',
+		'농협',
+		'카카오뱅크',
+		'토스뱅크',
+		'새마을',
+		'SC제일',
+		'씨티',
+		'해당없음',
+	] as const,
 	priceUnits: ['WON', 'USD', 'GBP', 'EUR', 'JPY'],
 } as const;
 
@@ -53,6 +68,7 @@ const priceUnit = {
 
 const bankSvgs: Record<string, string> = {
 	신한: shinhanSvg,
+	현대: hyundaiSvg,
 	하나: hanaSvg,
 	국민: kookminSvg,
 	우리: wooriSvg,
